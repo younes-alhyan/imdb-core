@@ -179,4 +179,33 @@ export const operationsMap = {
 }`,
     variables: (listId: string, constId: string) => ({ listId, constId }),
   },
+
+  AddRating: {
+    methode: "post",
+    query: `mutation UpdateTitleRating($rating: Int!, $titleId: ID!) {
+    rateTitle(input: { rating: $rating, titleId: $titleId }) {
+      rating {
+        value
+      }
+    }
+  }`,
+    operationName: "UpdateTitleRating",
+    variables: (titleId: string, rating: number) => ({
+      titleId,
+      rating,
+    }),
+  },
+
+  RemoveRating: {
+    methode: "post",
+    query: `mutation DeleteTitleRating($titleId: ID!) {
+    deleteTitleRating(input: { titleId: $titleId }) {
+      date
+    }
+  }`,
+    operationName: "DeleteTitleRating",
+    variables: (titleId: string) => ({
+      titleId,
+    }),
+  },
 } satisfies Record<string, Operation>;

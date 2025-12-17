@@ -1,0 +1,7 @@
+temp/
+test.ts
+example.ts
+dev.ts
+dist/
+node_modules/
+*.txt

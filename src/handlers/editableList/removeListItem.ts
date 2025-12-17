@@ -3,12 +3,16 @@ import { imdbGraphQL } from "../../utils/imdbGraphQl.js";
 import { withVariables } from "../../utils/withVariables.js";
 
 const getOperation = (endpoint: string, listId: string, titleId: string) => {
-  if (endpoint.includes("watchlist")) {
-    return withVariables(operationsMap.RemoveFromWatchList, titleId);
+  if (listId === "ratings") {
+    return withVariables(operationsMap.RemoveRating, titleId);
   }
 
-  if (endpoint.includes("watchhistory")) {
+  if (listId === "watchhistory") {
     return withVariables(operationsMap.RemoveFromWatched, titleId);
+  }
+
+  if (endpoint.includes("watchlist")) {
+    return withVariables(operationsMap.RemoveFromWatchList, titleId);
   }
 
   return withVariables(operationsMap.RemoveItemFromList, listId, titleId);

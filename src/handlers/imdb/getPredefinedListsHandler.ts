@@ -14,7 +14,7 @@ const createList = (
   return new EditableListClient(id || customId, endpoint, data, getCookie);
 };
 
-export const fetchPredefinedLists = async (
+export const getPredefinedListsHandler = async (
   getCookie: () => string,
   getUserId: () => string
 ): Promise<PredefinedListRecord> => {

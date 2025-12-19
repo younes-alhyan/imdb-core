@@ -1,6 +1,11 @@
 import { setSessionHandler } from "../../handlers/imdb/setSessionHandler.js";
-import { fetchPredefinedLists } from "../../handlers/imdb/fetchPredefinedLists.js";
-import { fetchUserLists } from "../../handlers/imdb/fetchUserLists.js";
-import { createImmutableList } from "./createImmutableList.js";
+import { getPredefinedListsHandler } from "./getPredefinedListsHandler.js";
+import { getUserListsHandler } from "./getUserListsHandler.js";
+import { getPublicListHandler } from "./getPublicListHandler.js";
 
-export { setSessionHandler, fetchPredefinedLists, fetchUserLists, createImmutableList };
+export {
+  setSessionHandler,
+  getPredefinedListsHandler,
+  getUserListsHandler,
+  getPublicListHandler,
+};

@@ -1,13 +1,13 @@
 import { ImmutableListClient } from "./immutableListClient.js";
 import type { EditableList } from "../types/public.js";
-import { addListItem, removeListItem } from "../handlers/editableList/index.js";
+import { addItemHandler, removeItemHandler } from "../handlers/editableList/index.js";
 
 export class EditableListClient
   extends ImmutableListClient
   implements EditableList
 {
   async addItem(itemId: string, options?: { rating?: number }): Promise<any> {
-    return await addListItem(
+    return await addItemHandler(
       this.endpoint,
       this.id,
       itemId,
@@ -17,6 +17,6 @@ export class EditableListClient
   }
 
   async removeItem(itemId: string): Promise<any> {
-    return await removeListItem(this.endpoint, this.id, itemId, this.getCookie);
+    return await removeItemHandler(this.endpoint, this.id, itemId, this.getCookie);
   }
 }

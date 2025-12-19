@@ -4,7 +4,7 @@ import { imdbGraphQL } from "../../utils/imdbGraphQl.js";
 import { EditableListClient } from "../../client/editableListClient.js";
 import { withVariables } from "../../utils/withVariables.js";
 
-export const fetchUserLists = async (
+export const getUserListsHandler = async (
   getCookie: () => string
 ): Promise<EditableList[]> => {
   const cookie = getCookie();

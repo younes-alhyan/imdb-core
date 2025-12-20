@@ -7,6 +7,7 @@ import type {
   SortType,
   SortOrder,
 } from "../types/public.js";
+import { TITLE_TYPES } from "../types/public.js";
 import {
   setSessionHandler,
   getPredefinedListsHandler,
@@ -30,28 +31,59 @@ export class ImdbClient implements Imdb {
     return setSessionHandler(this, options);
   }
 
-  async getPredefinedLists(): Promise<PredefinedListRecord> {
-    return getPredefinedListsHandler(this.getCookie, this.getUserId);
+  async getPredefinedLists({
+    isInFavPeopleWeblab = false,
+    locale = "en-US",
+  }: {
+    isInFavPeopleWeblab?: boolean;
+    locale?: string;
+  } = {}): Promise<PredefinedListRecord> {
+    const options = {
+      isInFavPeopleWeblab,
+      locale,
+    };
+    return getPredefinedListsHandler(this.getCookie, this.getUserId, options);
   }
 
-  async getUserLists(): Promise<EditableList[]> {
-    return getUserListsHandler(this.getCookie);
+  async getUserLists({
+    first = 10,
+    locale = "en-US",
+  }: {
+    first?: number;
+    locale?: string;
+  } = {}): Promise<EditableList[]> {
+    const options = { first, locale };
+    return getUserListsHandler(this.getCookie, options);
   }
 
   getPublicList(listId: string): ImmutableList {
     return getPublicListHandler(this.getCookie, listId);
   }
 
-  async searchTitle(
-    query: string,
-    options?: {
-      first?: number;
-      locale?: string;
-      sortBy?: SortType;
-      sortOrder?: SortOrder;
-      titleTypes?: TitleType[];
-    }
-  ) {
-    return searchHandler(this.getCookie, query, options);
+  async searchTitle({
+    first = 50,
+    locale = "en-US",
+    sortBy = "POPULARITY" as SortType,
+    sortOrder = "ASC" as SortOrder,
+    query,
+    titleTypes = [...TITLE_TYPES],
+  }: {
+    first?: number;
+    locale?: string;
+    sortBy?: SortType;
+    sortOrder?: SortOrder;
+    query: string;
+    titleTypes?: TitleType[];
+  }) {
+    const options = {
+      first,
+      locale,
+      sortBy,
+      sortOrder,
+      query,
+      titleTypes,
+    };
+
+    return searchHandler(this.getCookie, options);
   }
 }

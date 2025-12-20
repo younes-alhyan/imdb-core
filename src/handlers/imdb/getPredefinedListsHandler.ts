@@ -1,7 +1,6 @@
 import type { PredefinedListRecord, EditableList } from "../../types/public.js";
 import { operationsMap } from "../../utils/operationsMap.js";
 import { imdbGraphQL } from "../../utils/imdbGraphQl.js";
-import { withVariables } from "../../utils/withVariables.js";
 import { EditableListClient } from "../../client/index.js";
 
 const createList = (
@@ -16,52 +15,48 @@ const createList = (
 
 export const getPredefinedListsHandler = async (
   getCookie: () => string,
-  getUserId: () => string
+  getUserId: () => string,
+  options: {
+    isInFavPeopleWeblab: boolean;
+    locale: string;
+  }
 ): Promise<PredefinedListRecord> => {
   const cookie = getCookie();
   const userId = getUserId();
 
-  const op = operationsMap.GetPredefinedLists;
-  const opWithVars = withVariables(op);
+  const { data } = await imdbGraphQL<any>(
+    cookie,
+    operationsMap.GetPredefinedLists,
+    options
+  );
 
-  try {
-    const { data } = await imdbGraphQL<any>(cookie, opWithVars);
-
-    if (
-      !data?.checkins ||
-      !data?.ratings ||
-      !data?.watchHistory ||
-      !data?.watchlist
-    ) {
-      throw new Error("No predefined lists data");
-    }
-
-    return {
-      watchlist: createList(
-        `/user/${userId}/watchlist`,
-        data.watchlist,
-        getCookie
-      ),
-      checkins: createList(
-        `/user/${userId}/checkins`,
-        data.checkins,
-        getCookie
-      ),
-      watchHistory: createList(
-        `/user/${userId}/watchhistory`,
-        data.watchHistory,
-        getCookie,
-        "watchhistory"
-      ),
-      ratings: createList(
-        `/user/${userId}/ratings`,
-        data.ratings,
-        getCookie,
-        "ratings"
-      ),
-    };
-  } catch (error: any) {
-    console.error(error);
-    return {};
+  if (
+    !data?.checkins ||
+    !data?.ratings ||
+    !data?.watchHistory ||
+    !data?.watchlist
+  ) {
+    throw new Error("No predefined lists data");
   }
+
+  return {
+    watchlist: createList(
+      `/user/${userId}/watchlist`,
+      data.watchlist,
+      getCookie
+    ),
+    checkins: createList(`/user/${userId}/checkins`, data.checkins, getCookie),
+    watchHistory: createList(
+      `/user/${userId}/watchhistory`,
+      data.watchHistory,
+      getCookie,
+      "watchhistory"
+    ),
+    ratings: createList(
+      `/user/${userId}/ratings`,
+      data.ratings,
+      getCookie,
+      "ratings"
+    ),
+  };
 };

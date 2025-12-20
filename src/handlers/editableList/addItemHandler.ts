@@ -1,40 +1,34 @@
 import { operationsMap } from "../../utils/operationsMap.js";
 import { imdbGraphQL } from "../../utils/imdbGraphQl.js";
-import { withVariables } from "../../utils/withVariables.js";
 
-const getOperation = (
-  endpoint: string,
-  listId: string,
-  titleId: string,
-  options?: {
-    rating?: number;
-  }
-) => {
-  if (listId === "ratings") {
-    return withVariables(operationsMap.AddRating, titleId, options?.rating);
-  }
-  return withVariables(operationsMap.AddItemToList, listId, titleId);
+const getOperation = (endpoint: string) => {
+  if (endpoint.includes("watchlist")) return operationsMap.AddToWatchList;
+  if (endpoint.includes("watchhistory")) return operationsMap.AddToWatched;
+  if (endpoint.includes("ratings")) return operationsMap.AddRating;
+  return operationsMap.AddItemToList;
 };
 
 export const addItemHandler = async (
   endpoint: string,
-  listId: string,
-  titleId: string,
   getCookie: () => string,
-  options?: {
+  options: {
+    listId: string;
+    titleId: string;
+    includeListItemMetadata: boolean;
+    refTagQueryParam: string;
+    originalTitleText: boolean;
+    isInPace: boolean;
     rating?: number;
   }
 ): Promise<boolean> => {
-  const op = getOperation(endpoint, listId, titleId, options);
+  const { listId, rating } = options;
+  if (listId === "ratings" && !rating) {
+    throw new Error("Ratings list must include rating to add item");
+  }
 
   const cookie = getCookie();
-  try {
-    const response = await imdbGraphQL(cookie, op);
+  const response = await imdbGraphQL(cookie, getOperation(endpoint), options);
 
-    if (response.data) return true;
-    return false;
-  } catch (error) {
-    console.error("Failed to add list item:", error);
-    return false;
-  }
+  if (response.data) return true;
+  return false;
 };

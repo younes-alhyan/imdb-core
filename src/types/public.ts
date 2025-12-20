@@ -6,8 +6,15 @@ export interface ImmutableList {
 }
 
 export interface EditableList extends ImmutableList {
-  addItem: (itemId: string, options?: { rating?: number }) => Promise<boolean>;
-  removeItem: (itemId: string) => Promise<boolean>;
+  addItem: (options: {
+    titleId: string;
+    includeListItemMetadata?: boolean;
+    refTagQueryParam?: string;
+    originalTitleText?: boolean;
+    isInPace?: boolean;
+    rating?: number;
+  }) => Promise<boolean>;
+  removeItem: (options: { titleId: string }) => Promise<boolean>;
 }
 
 const PREDEFINED_LIST_KEYS = [
@@ -67,19 +74,23 @@ export interface Imdb {
   }) => Promise<boolean>;
 
   // Lists
-  getPredefinedLists: () => Promise<PredefinedListRecord>;
-  getUserLists: () => Promise<EditableList[]>;
+  getPredefinedLists: (options?: {
+    isInFavPeopleWeblab?: boolean;
+    locale?: string;
+  }) => Promise<PredefinedListRecord>;
+  getUserLists: (options?: {
+    first?: number;
+    locale?: string;
+  }) => Promise<EditableList[]>;
   getPublicList: (listId: string) => ImmutableList;
 
   // Search
-  searchTitle: (
-    query: string,
-    options?: {
-      first?: number;
-      locale?: string;
-      sortBy?: SortType;
-      sortOrder?: SortOrder;
-      titleTypes?: TitleType[];
-    }
-  ) => Promise<any>;
+  searchTitle: (options: {
+    first?: number;
+    locale?: string;
+    sortBy?: SortType;
+    sortOrder?: SortOrder;
+    query: string;
+    titleTypes?: TitleType[];
+  }) => Promise<any>;
 }

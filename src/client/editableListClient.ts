@@ -7,7 +7,7 @@ export class EditableListClient
   implements EditableList
 {
   async addItem(itemId: string, options?: { rating?: number }): Promise<any> {
-    return await addItemHandler(
+    return addItemHandler(
       this.endpoint,
       this.id,
       itemId,
@@ -17,6 +17,6 @@ export class EditableListClient
   }
 
   async removeItem(itemId: string): Promise<any> {
-    return await removeItemHandler(this.endpoint, this.id, itemId, this.getCookie);
+    return removeItemHandler(this.endpoint, this.id, itemId, this.getCookie);
   }
 }

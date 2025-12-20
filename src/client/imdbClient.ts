@@ -27,15 +27,15 @@ export class ImdbClient implements Imdb {
     cookie?: string;
     userId?: string;
   }): Promise<boolean> {
-    return await setSessionHandler(this, options);
+    return setSessionHandler(this, options);
   }
 
   async getPredefinedLists(): Promise<PredefinedListRecord> {
-    return await getPredefinedListsHandler(this.getCookie, this.getUserId);
+    return getPredefinedListsHandler(this.getCookie, this.getUserId);
   }
 
   async getUserLists(): Promise<EditableList[]> {
-    return await getUserListsHandler(this.getCookie);
+    return getUserListsHandler(this.getCookie);
   }
 
   getPublicList(listId: string): ImmutableList {
@@ -52,6 +52,6 @@ export class ImdbClient implements Imdb {
       titleTypes?: TitleType[];
     }
   ) {
-    return await searchHandler(this.getCookie, query, options);
+    return searchHandler(this.getCookie, query, options);
   }
 }

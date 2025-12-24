@@ -5,3 +5,4 @@ dev.ts
 dist/
 node_modules/
 *.txt
+.env

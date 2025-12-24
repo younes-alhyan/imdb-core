@@ -1,7 +1,7 @@
 import type { EditableList } from "../../types/public.js";
 import { operationsMap } from "../../utils/operationsMap.js";
 import { imdbGraphQL } from "../../utils/imdbGraphQl.js";
-import { EditableListClient } from "../../client/editableListClient.js";
+import { createEditableList } from "../../client/index.js";
 
 export const getUserListsHandler = async (
   getCookie: () => string,
@@ -23,6 +23,6 @@ export const getUserListsHandler = async (
 
   return edges.map((edge: any) => {
     const { id, ...restData } = edge.node;
-    return new EditableListClient(id, `/list/${id}`, restData, getCookie);
+    return createEditableList(id, `/list/${id}`, restData, getCookie);
   });
 };

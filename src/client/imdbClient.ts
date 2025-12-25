@@ -6,6 +6,8 @@ import type {
   TitleType,
   SortType,
   SortOrder,
+  ListType,
+  ListVisibility,
 } from "../types/public.js";
 import { TITLE_TYPES } from "../types/public.js";
 import {
@@ -13,6 +15,8 @@ import {
   getPredefinedListsHandler,
   getUserListsHandler,
   getPublicListHandler,
+  createUserListHandler,
+  removeUserListHandler,
   searchHandler,
 } from "../handlers/imdb/index.js";
 
@@ -58,6 +62,33 @@ export class ImdbClient implements Imdb {
 
   getPublicList(listId: string): ImmutableList {
     return getPublicListHandler(this.getCookie, listId);
+  }
+
+  async createUserList({
+    name,
+    listDescription = "",
+    listType = "TITLES" as ListType,
+    visibility = "PRIVATE" as ListVisibility,
+    allowDuplicates = true,
+  }: {
+    name: string;
+    listDescription?: string;
+    listType?: ListType;
+    visibility?: ListVisibility;
+    allowDuplicates?: boolean;
+  }): Promise<EditableList> {
+    const options = {
+      name,
+      listDescription,
+      listType,
+      visibility,
+      allowDuplicates,
+    };
+    return createUserListHandler(this.getCookie, options);
+  }
+
+  async removeUserList(options: { listId: string }): Promise<boolean> {
+    return removeUserListHandler(this.getCookie, options);
   }
 
   async searchTitle({

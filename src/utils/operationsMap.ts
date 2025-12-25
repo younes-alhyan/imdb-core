@@ -126,9 +126,22 @@ export const operationsMap = {
       allowDuplicates: boolean;
     }) => ({
       input: {
-        options,
+        ...options,
       },
     }),
+  },
+
+  RemoveList: {
+    methode: "post",
+    operationName: "DeleteList",
+    query: `
+    mutation DeleteList($listId: ID!) {
+      deleteList(input: { listId: $listId }) {
+        listId
+      }
+    }
+  `,
+    variables: (options: { listId: string }) => options,
   },
 
   AddItemToList: {

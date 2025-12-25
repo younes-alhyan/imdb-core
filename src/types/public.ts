@@ -106,4 +106,7 @@ export interface Imdb {
     query: string;
     titleTypes?: TitleType[];
   }) => Promise<any>;
+
+  // Titles
+  getLastVisited: (options?: { count: number; locale: string }) => Promise<any>;
 }

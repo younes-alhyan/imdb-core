@@ -5,6 +5,7 @@ import { getPublicListHandler } from "./getPublicListHandler.js";
 import { createUserListHandler } from "./createUserListHandler.js";
 import { removeUserListHandler } from "./removeUserListHandler.js";
 import { searchHandler } from "./searchHandler.js";
+import { getLastVisitedHandler } from "./getLastVisitedHandler.js";
 
 export {
   setSessionHandler,
@@ -14,4 +15,5 @@ export {
   createUserListHandler,
   removeUserListHandler,
   searchHandler,
+  getLastVisitedHandler,
 };

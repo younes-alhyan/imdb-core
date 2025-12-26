@@ -108,5 +108,5 @@ export interface Imdb {
   }) => Promise<any>;
 
   // Titles
-  getLastVisited: (options?: { count: number; locale: string }) => Promise<any>;
+  getLastVisited: (options?: { count?: number; locale?: string }) => Promise<any>;
 }

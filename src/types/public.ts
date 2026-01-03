@@ -88,7 +88,7 @@ export interface Imdb {
     first?: number;
     locale?: string;
   }) => Promise<EditableList[]>;
-  getPublicList: (listId: string) => ImmutableList;
+  getPublicList: (listId: string) => Promise<ImmutableList>;
   createUserList: (options: {
     name: string;
     listDescription?: string;

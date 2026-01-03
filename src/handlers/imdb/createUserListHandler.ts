@@ -20,7 +20,7 @@ export async function createUserListHandler(
   const cookie = getCookie();
   const op = operationsMap.CreateList;
   
-  const { data } = (await imdbGraphQL(cookie, op, options)) as any;
+  const { data } = await imdbGraphQL<any>(cookie, op, options);
   const id = data.createList.listId;
 
   return createEditableList(id, `/list/${id}`, {}, getCookie);

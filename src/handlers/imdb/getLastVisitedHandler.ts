@@ -11,7 +11,7 @@ export async function getLastVisitedHandler(
   const cookie = getCookie();
   const op = operationsMap.GetLastVisited;
 
-  const { data } = (await imdbGraphQL(cookie, op, options)) as any;
+  const { data } = await imdbGraphQL<any>(cookie, op, options);
 
   return data.recentlyViewedItems.edges;
 }

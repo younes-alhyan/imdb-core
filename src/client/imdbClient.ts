@@ -61,7 +61,7 @@ export class ImdbClient implements Imdb {
     return getUserListsHandler(this.getCookie, options);
   }
 
-  getPublicList(listId: string): ImmutableList {
+  async getPublicList(listId: string): Promise<ImmutableList> {
     return getPublicListHandler(this.getCookie, listId);
   }
 

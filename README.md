@@ -2,6 +2,7 @@
 
 ![IMDb](https://img.shields.io/badge/IMDb-F5C518?style=for-the-badge&logo=imdb&logoColor=black)
 ![npm](https://img.shields.io/npm/v/imdb-core?style=for-the-badge&color=orange&logo=npm)
+![npm downloads](https://img.shields.io/npm/dt/imdb-core?style=for-the-badge&color=blue&logo=npm)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-000000?style=for-the-badge)

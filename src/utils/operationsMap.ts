@@ -2,6 +2,7 @@ import type { Operation } from "../types/internal.js";
 import type { SortOrder, SortType, TitleType } from "../types/public.js";
 
 export const operationsMap = {
+  // Watchlist Mutations
   AddToWatchList: {
     methode: "post",
     operationName: "AddIdToWatchlist",
@@ -36,6 +37,7 @@ export const operationsMap = {
     }),
   },
 
+  // Watched Titles Mutations
   AddToWatched: {
     methode: "post",
     operationName: "AddWatchedTitle",
@@ -70,6 +72,32 @@ export const operationsMap = {
     variables: (options: { titleId: string }) => options,
   },
 
+  // Rating Mutations
+  AddRating: {
+    methode: "post",
+    query: `mutation UpdateTitleRating($rating: Int!, $titleId: ID!) {
+    rateTitle(input: { rating: $rating, titleId: $titleId }) {
+      rating {
+        value
+      }
+    }
+  }`,
+    operationName: "UpdateTitleRating",
+    variables: (options: { titleId: string; rating: number }) => options,
+  },
+
+  RemoveRating: {
+    methode: "post",
+    query: `mutation DeleteTitleRating($titleId: ID!) {
+    deleteTitleRating(input: { titleId: $titleId }) {
+      date
+    }
+  }`,
+    operationName: "DeleteTitleRating",
+    variables: (options: { titleId: string }) => options,
+  },
+
+  // User Lists Queries and Mutations
   GetUserLists: {
     methode: "get",
     operationName: "YourListsSidebar",
@@ -92,19 +120,6 @@ export const operationsMap = {
       persistedQuery: {
         sha256Hash:
           "f48bec9c67c35718c357265ef8af84ca7e397348bc2a80912a01939350ab8884",
-        version: 1,
-      },
-    },
-  },
-
-  GetLastVisited: {
-    methode: "get",
-    operationName: "RVI_Items",
-    variables: (options: { count: number; locale: string }) => options,
-    extensions: {
-      persistedQuery: {
-        sha256Hash:
-          "32eda43bfa1053f69036b945638fc4a0ae6cc4a2429de224b3185f8b0e37717b",
         version: 1,
       },
     },
@@ -186,30 +201,19 @@ export const operationsMap = {
     }),
   },
 
-  AddRating: {
-    methode: "post",
-    query: `mutation UpdateTitleRating($rating: Int!, $titleId: ID!) {
-    rateTitle(input: { rating: $rating, titleId: $titleId }) {
-      rating {
-        value
-      }
-    }
-  }`,
-    operationName: "UpdateTitleRating",
-    variables: (options: { titleId: string; rating: number }) => options,
+  GetLastVisited: {
+    methode: "get",
+    operationName: "RVI_Items",
+    variables: (options: { count: number; locale: string }) => options,
+    extensions: {
+      persistedQuery: {
+        sha256Hash:
+          "32eda43bfa1053f69036b945638fc4a0ae6cc4a2429de224b3185f8b0e37717b",
+        version: 1,
+      },
+    },
   },
-
-  RemoveRating: {
-    methode: "post",
-    query: `mutation DeleteTitleRating($titleId: ID!) {
-    deleteTitleRating(input: { titleId: $titleId }) {
-      date
-    }
-  }`,
-    operationName: "DeleteTitleRating",
-    variables: (options: { titleId: string }) => options,
-  },
-
+  // Search Queries
   AdvancedTitleSearch: {
     methode: "get",
     operationName: "AdvancedTitleSearch",

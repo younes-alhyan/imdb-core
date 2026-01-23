@@ -1,7 +1,7 @@
 {
   "name": "imdb-core",
   "description": "A TypeScript library for interacting with IMDb, allowing full control over user and public lists, searching for titles, and managing watchlists and ratings—directly from code, without relying on the IMDb UI.",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

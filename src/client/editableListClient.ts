@@ -6,8 +6,14 @@ export class EditableListClient
   extends ImmutableListClient
   implements EditableList
 {
-  async addItem(itemId: string): Promise<any> {
-    return await addListItem(this.endpoint, this.id, itemId, this.getCookie);
+  async addItem(itemId: string, options?: { rating?: number }): Promise<any> {
+    return await addListItem(
+      this.endpoint,
+      this.id,
+      itemId,
+      this.getCookie,
+      options
+    );
   }
 
   async removeItem(itemId: string): Promise<any> {

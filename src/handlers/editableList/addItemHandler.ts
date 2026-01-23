@@ -16,7 +16,7 @@ const getOperation = (
   return withVariables(operationsMap.AddItemToList, listId, titleId);
 };
 
-export const addListItem = async (
+export const addItemHandler = async (
   endpoint: string,
   listId: string,
   titleId: string,

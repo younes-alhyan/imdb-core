@@ -6,9 +6,9 @@ import type {
 } from "../types/public.js";
 import {
   setSessionHandler,
-  fetchPredefinedLists,
-  fetchUserLists,
-  createImmutableList,
+  getPredefinedListsHandler,
+  getUserListsHandler,
+  getPublicListHandler,
 } from "../handlers/imdb/index.js";
 
 export class ImdbClient implements Imdb {
@@ -27,14 +27,14 @@ export class ImdbClient implements Imdb {
   }
 
   async getPredefinedLists(): Promise<PredefinedListRecord> {
-    return await fetchPredefinedLists(this.getCookie, this.getUserId);
+    return await getPredefinedListsHandler(this.getCookie, this.getUserId);
   }
 
   async getUserLists(): Promise<EditableList[]> {
-    return await fetchUserLists(this.getCookie);
+    return await getUserListsHandler(this.getCookie);
   }
 
   getPublicList(listId: string): ImmutableList {
-    return createImmutableList(this.getCookie, listId);
+    return getPublicListHandler(this.getCookie, listId);
   }
 }

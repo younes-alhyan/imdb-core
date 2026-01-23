@@ -1,5 +1,5 @@
 import type { ImmutableList } from "../types/public.js";
-import { fetchListItems } from "../handlers/immutableList/fetchListItems.js";
+import { getItemsHandler } from "../handlers/immutableList/getItemsHandler.js";
 
 export class ImmutableListClient implements ImmutableList {
   constructor(
@@ -10,6 +10,6 @@ export class ImmutableListClient implements ImmutableList {
   ) {}
 
   async getItems(): Promise<any> {
-    return await fetchListItems(this.endpoint, this.getCookie);
+    return await getItemsHandler(this.endpoint, this.getCookie);
   }
 }

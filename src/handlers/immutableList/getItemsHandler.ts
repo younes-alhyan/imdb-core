@@ -42,7 +42,7 @@ const extractTitles = (html: string, endpoint: string) => {
   }
 };
 
-export const fetchListItems = async (
+export const getItemsHandler = async (
   endpoint: string,
   getCookie: () => string
 ): Promise<any[]> => {

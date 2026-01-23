@@ -1,7 +1,7 @@
 import type { ImmutableList } from "../../types/public.js";
 import { ImmutableListClient } from "../../client/immutableListClient.js";
 
-export const createImmutableList = (
+export const getPublicListHandler = (
   getCookie: () => string,
   listId: string
 ): ImmutableList => {

@@ -32,5 +32,5 @@ export interface Imdb {
   }) => Promise<boolean>;
   getPredefinedLists: () => Promise<PredefinedListRecord>;
   getUserLists: () => Promise<EditableList[]>;
-  getPublicList: (userId: string, listId: string) => ImmutableList;
+  getPublicList: (listId: string) => ImmutableList;
 }

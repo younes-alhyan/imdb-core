@@ -63,6 +63,12 @@ export type SortType = (typeof SORT_TYPES)[number];
 export const SORT_ORDER_TYPES = ["ASC", "DESC"] as const;
 export type SortOrder = (typeof SORT_ORDER_TYPES)[number];
 
+export const LIST_TYPES = ["TITLES", "PEOPLE", "IMAGES", "VIDEOS"] as const;
+export type ListType = (typeof LIST_TYPES)[number];
+
+export const LIST_VISIBILITY = ["PRIVATE", "PUBLIC"] as const;
+export type ListVisibility = (typeof LIST_VISIBILITY)[number];
+
 export interface Imdb {
   // Session
   cookie: string;
@@ -83,7 +89,14 @@ export interface Imdb {
     locale?: string;
   }) => Promise<EditableList[]>;
   getPublicList: (listId: string) => ImmutableList;
-
+  createUserList: (options: {
+    name: string;
+    listDescription?: string;
+    listType?: ListType;
+    visibility?: ListVisibility;
+    allowDuplicates?: boolean;
+  }) => Promise<EditableList>;
+  removeUserList: (options: { listId: string }) => Promise<boolean>;
   // Search
   searchTitle: (options: {
     first?: number;

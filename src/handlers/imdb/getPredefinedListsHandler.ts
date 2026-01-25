@@ -1,7 +1,7 @@
 import type { PredefinedListRecord, EditableList } from "../../types/public.js";
 import { operationsMap } from "../../utils/operationsMap.js";
 import { imdbGraphQL } from "../../utils/imdbGraphQl.js";
-import { EditableListClient } from "../../client/index.js";
+import { createEditableList } from "../../client/index.js";
 
 const createList = (
   endpoint: string,
@@ -10,7 +10,7 @@ const createList = (
   customId?: string
 ): EditableList => {
   const { id, ...data } = listData;
-  return new EditableListClient(id || customId, endpoint, data, getCookie);
+  return createEditableList(id || customId, endpoint, data, getCookie);
 };
 
 export const getPredefinedListsHandler = async (

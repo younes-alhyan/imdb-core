@@ -17,13 +17,13 @@ export interface EditableList extends ImmutableList {
   removeItem: (options: { titleId: string }) => Promise<boolean>;
 }
 
-const PREDEFINED_LIST_KEYS = [
+export const PREDEFINED_LIST_KEYS = [
   "ratings",
   "watchlist",
   "watchHistory",
   "checkins",
 ] as const;
-type PredefinedListKey = (typeof PREDEFINED_LIST_KEYS)[number];
+export type PredefinedListKey = (typeof PREDEFINED_LIST_KEYS)[number];
 
 export type PredefinedListRecord = Partial<
   Record<PredefinedListKey, EditableList>

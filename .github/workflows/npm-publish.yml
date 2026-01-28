@@ -19,6 +19,7 @@ jobs:
       - run: npm ci
       # TODO: uncomment when tests are ready
       # - run: npm test
+      - run: npm run build
 
   publish-npm:
     needs: build

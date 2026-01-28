@@ -1,10 +1,5 @@
 import type { Operation } from "../types/internal.js";
-import {
-  TITLE_TYPES,
-  type SortOrder,
-  type SortType,
-  type TitleType,
-} from "../types/public.js";
+import type { SortOrder, SortType, TitleType } from "../types/public.js";
 
 export const operationsMap = {
   AddToWatchList: {
@@ -19,7 +14,9 @@ export const operationsMap = {
       }
     }
   }`,
-    variables: (id: string) => ({ id }),
+    variables: (options: { titleId: string }) => ({
+      id: options.titleId,
+    }),
   },
 
   RemoveFromWatchList: {
@@ -34,7 +31,9 @@ export const operationsMap = {
     }
   }
 }`,
-    variables: (id: string) => ({ id }),
+    variables: (options: { titleId: string }) => ({
+      id: options.titleId,
+    }),
   },
 
   AddToWatched: {
@@ -49,7 +48,7 @@ export const operationsMap = {
     success
   }
 }`,
-    variables: (titleId: string) => ({ titleId }),
+    variables: (options: { titleId: string }) => options,
   },
 
   RemoveFromWatched: {
@@ -68,16 +67,13 @@ export const operationsMap = {
     success
   }
 }`,
-    variables: (titleId: string) => ({ titleId }),
+    variables: (options: { titleId: string }) => options,
   },
 
   GetUserLists: {
     methode: "get",
     operationName: "YourListsSidebar",
-    variables: (first: number = 10, locale: string = "en-US") => ({
-      first,
-      locale,
-    }),
+    variables: (options: { first: number; locale: string }) => options,
     extensions: {
       persistedQuery: {
         sha256Hash:
@@ -90,13 +86,8 @@ export const operationsMap = {
   GetPredefinedLists: {
     methode: "get",
     operationName: "YourPredefinedListsSidebar",
-    variables: (
-      isInFavPeopleWeblab: boolean = false,
-      locale: string = "en-US"
-    ) => ({
-      isInFavPeopleWeblab,
-      locale,
-    }),
+    variables: (options: { isInFavPeopleWeblab: boolean; locale: string }) =>
+      options,
     extensions: {
       persistedQuery: {
         sha256Hash:
@@ -109,10 +100,7 @@ export const operationsMap = {
   GetLastVisited: {
     methode: "get",
     operationName: "RVI_Items",
-    variables: (count: number = 10, locale: string = "en-US") => ({
-      count,
-      locale,
-    }),
+    variables: (options: { count: number; locale: string }) => options,
     extensions: {
       persistedQuery: {
         sha256Hash:
@@ -130,19 +118,15 @@ export const operationsMap = {
     listId
   }
 }`,
-    variables: (
-      name: string = "",
-      listDescription: string = "",
-      listType: "TITLES" | "PEOPLE" | "IMAGES" | "VIDEOS" = "TITLES",
-      visibility: "PRIVATE" | "PUBLIC" = "PRIVATE",
-      allowDuplicates: boolean = false
-    ) => ({
+    variables: (options: {
+      name: string;
+      listDescription: string;
+      listType: "TITLES" | "PEOPLE" | "IMAGES" | "VIDEOS";
+      visibility: "PRIVATE" | "PUBLIC";
+      allowDuplicates: boolean;
+    }) => ({
       input: {
-        name,
-        listDescription,
-        listType,
-        visibility,
-        allowDuplicates,
+        options,
       },
     }),
   },
@@ -158,20 +142,20 @@ export const operationsMap = {
     }
   }
 }`,
-    variables: (
-      listId: string,
-      constId: string,
-      includeListItemMetadata: boolean = false,
-      refTagQueryParam: string = "tt_ov_lst",
-      originalTitleText: boolean = false,
-      isInPace: boolean = true
-    ) => ({
-      listId,
-      constId,
-      includeListItemMetadata,
-      refTagQueryParam,
-      originalTitleText,
-      isInPace,
+    variables: (options: {
+      listId: string;
+      titleId: string;
+      includeListItemMetadata: boolean;
+      refTagQueryParam: string;
+      originalTitleText: boolean;
+      isInPace: boolean;
+    }) => ({
+      listId: options.listId,
+      constId: options.titleId, // rename only in the output
+      includeListItemMetadata: options.includeListItemMetadata,
+      refTagQueryParam: options.refTagQueryParam,
+      originalTitleText: options.originalTitleText,
+      isInPace: options.isInPace,
     }),
   },
 
@@ -183,7 +167,10 @@ export const operationsMap = {
     listId
   }
 }`,
-    variables: (listId: string, constId: string) => ({ listId, constId }),
+    variables: (options: { listId: string; titleId: string }) => ({
+      listId: options.listId,
+      constId: options.titleId,
+    }),
   },
 
   AddRating: {
@@ -196,10 +183,7 @@ export const operationsMap = {
     }
   }`,
     operationName: "UpdateTitleRating",
-    variables: (titleId: string, rating: number) => ({
-      titleId,
-      rating,
-    }),
+    variables: (options: { titleId: string; rating: number }) => options,
   },
 
   RemoveRating: {
@@ -210,31 +194,30 @@ export const operationsMap = {
     }
   }`,
     operationName: "DeleteTitleRating",
-    variables: (titleId: string) => ({
-      titleId,
-    }),
+    variables: (options: { titleId: string }) => options,
   },
 
   AdvancedTitleSearch: {
     methode: "get",
     operationName: "AdvancedTitleSearch",
-    variables: (
-      query: string,
-      first: number = 50,
-      locale: string = "en-US",
-      sortBy: SortType = "POPULARITY",
-      sortOrder: SortOrder = "ASC",
-      titleTypes: TitleType[] = [...TITLE_TYPES]
-    ) => ({
-      first,
-      locale,
-      sortBy,
-      sortOrder,
-      titleTextConstraint: { searchTerm: query },
-      titleTypeConstraint: {
-        anyTitleTypeIds: titleTypes,
-      },
-    }),
+    variables: (options: {
+      first: number;
+      locale: string;
+      sortBy: SortType;
+      sortOrder: SortOrder;
+      query: string;
+      titleTypes: TitleType[];
+    }) => {
+      const { first, locale, sortBy, sortOrder, query, titleTypes } = options;
+      return {
+        first,
+        locale,
+        sortBy,
+        sortOrder,
+        titleTextConstraint: { searchTerm: query },
+        titleTypeConstraint: { anyTitleTypeIds: titleTypes },
+      };
+    },
     extensions: {
       persistedQuery: {
         sha256Hash:

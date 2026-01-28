@@ -10,13 +10,22 @@ interface GraphQLResponse<T> {
 
 export const imdbGraphQL = async <T>(
   cookie: string,
-  { methode, operationName, query, variables = {}, extensions = {} }: Operation
+  {
+    methode,
+    operationName,
+    query,
+    variables = () => ({}),
+    extensions = {},
+  }: Operation,
+  options?: any
 ): Promise<GraphQLResponse<T>> => {
   const headers = {
     Accept: "*/*",
     "Content-Type": "application/json",
     Cookie: cookie,
   };
+
+  const vars = variables(options);
 
   try {
     const response =
@@ -25,13 +34,13 @@ export const imdbGraphQL = async <T>(
             headers,
             params: {
               operationName,
-              variables: JSON.stringify(variables),
+              variables: JSON.stringify(vars),
               extensions: JSON.stringify(extensions),
             },
           })
         : await axios.post(
             BASE_URL,
-            { operationName, query, variables, extensions },
+            { operationName, query, variables: vars, extensions },
             { headers }
           );
 

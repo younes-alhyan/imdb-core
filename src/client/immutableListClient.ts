@@ -10,6 +10,6 @@ export class ImmutableListClient implements ImmutableList {
   ) {}
 
   async getItems(): Promise<any> {
-    return await getItemsHandler(this.endpoint, this.getCookie);
+    return getItemsHandler(this.endpoint, this.getCookie);
   }
 }

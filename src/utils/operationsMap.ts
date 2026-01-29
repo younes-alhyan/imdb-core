@@ -1,4 +1,10 @@
 import type { Operation } from "../types/internal.js";
+import {
+  TITLE_TYPES,
+  type SortOrder,
+  type SortType,
+  type TitleType,
+} from "../types/public.js";
 
 export const operationsMap = {
   AddToWatchList: {
@@ -207,5 +213,34 @@ export const operationsMap = {
     variables: (titleId: string) => ({
       titleId,
     }),
+  },
+
+  AdvancedTitleSearch: {
+    methode: "get",
+    operationName: "AdvancedTitleSearch",
+    variables: (
+      query: string,
+      first: number = 50,
+      locale: string = "en-US",
+      sortBy: SortType = "POPULARITY",
+      sortOrder: SortOrder = "ASC",
+      titleTypes: TitleType[] = [...TITLE_TYPES]
+    ) => ({
+      first,
+      locale,
+      sortBy,
+      sortOrder,
+      titleTextConstraint: { searchTerm: query },
+      titleTypeConstraint: {
+        anyTitleTypeIds: titleTypes,
+      },
+    }),
+    extensions: {
+      persistedQuery: {
+        sha256Hash:
+          "9fc7c8867ff66c1e1aa0f39d0fd4869c64db97cddda14fea1c048ca4b568f06a",
+        version: 1,
+      },
+    },
   },
 } satisfies Record<string, Operation>;

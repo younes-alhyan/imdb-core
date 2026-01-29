@@ -18,6 +18,7 @@ import {
   createUserListHandler,
   removeUserListHandler,
   searchHandler,
+  getLastVisitedHandler,
 } from "../handlers/imdb/index.js";
 
 export class ImdbClient implements Imdb {
@@ -116,5 +117,16 @@ export class ImdbClient implements Imdb {
     };
 
     return searchHandler(this.getCookie, options);
+  }
+
+  async getLastVisited({
+    count = 10,
+    locale = "en-US",
+  }: {
+    count?: number;
+    locale?: string;
+  } = {}): Promise<any> {
+    const options = { count, locale };
+    return getLastVisitedHandler(this.getCookie, options);
   }
 }

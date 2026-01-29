@@ -2,6 +2,8 @@ import { setSessionHandler } from "../../handlers/imdb/setSessionHandler.js";
 import { getPredefinedListsHandler } from "./getPredefinedListsHandler.js";
 import { getUserListsHandler } from "./getUserListsHandler.js";
 import { getPublicListHandler } from "./getPublicListHandler.js";
+import { createUserListHandler } from "./createUserListHandler.js";
+import { removeUserListHandler } from "./removeUserListHandler.js";
 import { searchHandler } from "./searchHandler.js";
 
 export {
@@ -9,5 +11,7 @@ export {
   getPredefinedListsHandler,
   getUserListsHandler,
   getPublicListHandler,
-  searchHandler
+  createUserListHandler,
+  removeUserListHandler,
+  searchHandler,
 };

@@ -18,7 +18,7 @@ const getOperation = (endpoint: string, listId: string, titleId: string) => {
   return withVariables(operationsMap.RemoveItemFromList, listId, titleId);
 };
 
-export const removeListItem = async (
+export const removeItemHandler = async (
   endpoint: string,
   listId: string,
   titleId: string,

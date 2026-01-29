@@ -1,4 +1,4 @@
-import { addListItem } from "./addListItem.js";
-import { removeListItem } from "./removeListItem.js";
+import { addItemHandler } from "./addItemHandler.js";
+import { removeItemHandler } from "./removeItemHandler.js";
 
-export { addListItem, removeListItem };
+export { addItemHandler, removeItemHandler };

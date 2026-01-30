@@ -6,7 +6,7 @@ export interface ImmutableList {
 }
 
 export interface EditableList extends ImmutableList {
-  addItem: (itemId: string) => Promise<boolean>;
+  addItem: (itemId: string, options?: { rating?: number }) => Promise<boolean>;
   removeItem: (itemId: string) => Promise<boolean>;
 }
 

@@ -8,7 +8,7 @@ export async function removeUserListHandler(
   const cookie = getCookie();
   const op = operationsMap.RemoveList;
 
-  const { data } = (await imdbGraphQL(cookie, op, options)) as any;
+  const { data } = await imdbGraphQL<any>(cookie, op, options);
 
   if (!data || !data.deleteList || !data.deleteList.listId) return false;
   return data.deleteList.listId === options.listId;
